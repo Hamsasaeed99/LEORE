@@ -1,0 +1,44 @@
+﻿@model LEORE.Models.WishListItem
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>WishListItem</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="WishlistItemsId" />
+            <div class="form-group">
+                <label asp-for="WishlistID" class="control-label"></label>
+                <select asp-for="WishlistID" class="form-control" asp-items="ViewBag.WishlistID"></select>
+                <span asp-validation-for="WishlistID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddedAt" class="control-label"></label>
+                <input asp-for="AddedAt" class="form-control" />
+                <span asp-validation-for="AddedAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductID" class="control-label"></label>
+                <select asp-for="ProductID" class="form-control" asp-items="ViewBag.ProductID"></select>
+                <span asp-validation-for="ProductID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
