@@ -1,5 +1,6 @@
 using LEORE.Data;
 using LEORE.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,6 +23,10 @@ namespace LEORE
                 .AddEntityFrameworkStores<LEOREContext>();
             builder.Services.AddControllersWithViews();
 
+         
+
+            builder.Services.AddAuthorization();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -40,11 +45,12 @@ namespace LEORE
             app.UseRouting();
 
             app.UseAuthorization();
+            
 
             app.MapStaticAssets();
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Cart}/{action=Index}/")
+                pattern: "{controller=Product}/{action=Index}/{id?}")
                 .WithStaticAssets();
             app.MapRazorPages()
                .WithStaticAssets();
