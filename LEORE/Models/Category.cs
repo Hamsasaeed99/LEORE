@@ -16,7 +16,7 @@ public partial class Category
     [StringLength(10)]
     public string Name { get; set; }
 
-    public byte[] Image { get; set; }
+    public string Image { get; set; }
 
     [StringLength(500)]
     public string Description { get; set; }

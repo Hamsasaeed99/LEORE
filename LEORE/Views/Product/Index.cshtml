@@ -4,7 +4,42 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+
+<h2>Products</h2>
+
+<!-- Categories Filter -->
+<div>
+    <a asp-action="Index">All</a>
+    @foreach (var cat in ViewBag.Categories)
+    {
+        <a asp-action="Index" asp-route-categoryId="@cat.CategoryId">
+            @cat.Name
+        </a>
+    }
+</div>
+
+<hr />
+
+<div>
+@foreach (var item in Model)
+{
+    <div style="border:1px solid #ccc; padding:10px; margin:10px;">
+            <img src="@item.Image" width="150" />
+        <h4>@item.Name</h4>
+        <p>@item.Price EGP</p>
+        <p>@item.Category.Name</p>
+
+        <a asp-action="Details" asp-route-id="@item.ProductID">
+            View Details
+        </a>
+    </div>
+}
+</div>
+
+
+
+@* 
+<h1>Products</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -80,4 +115,4 @@
         </tr>
 }
     </tbody>
-</table>
+</table> *@
