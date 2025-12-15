@@ -3,45 +3,94 @@
 @{
     ViewData["Title"] = "Details";
 }
+<!-- Main Content -->
+<main class="main-content">
+    <div class="container">
+        <!-- Product Section -->
+        <section class="product-section1">
+            <div class="product-image-placeholder">
+                <img src="@Model.Image" alt="@Model.Name" class="fas fa-image" width="300" />
+            </div>
+            <div class="product-info">
+                <h2 class="product-name">@Model.Name</h2>
+                <div class="rating">
+                    @for (int i = 0; i < Model.Rate; i++)
+                    {
+                        <i class="fas fa-star"></i>
+                    }
 
-<h2>@Model.Name</h2>
+                </div>
+                <div class="product-price">@Model.Price $</div>
+                <p class="product-overview">@Model.Description</p>
 
-<p><b>Price:</b> @Model.Price</p>
-<p><b>Category:</b> @Model.Category.Name</p>
-<p><p><b>Image:</b></p>
-<img src="@Model.Image" alt="@Model.Name" width="300" /></p>
-<p><b>Description:</b> @Model.Description</p>
-<p><b>Color:</b> @Model.Color</p>
-<p><b>Size:</b> @Model.Size</p>
+                <div class="product-actions">
+                    <div class="quantity-selector">
+                        <button class="qty-btn minus" id="decreaseQty">−</button>
+                        <span class="qty-value" id="quantity">1</span>
+                        <button class="qty-btn plus" id="increaseQty">+</button>
+                    </div>
+                    <button class="add-to-cart-btn">Add to cart</button>
+                </div>
+            </div>
+        </section>
 
-<form asp-action="AddToCart" method="post">
-    <input type="hidden" name="ProductID" value="@Model.ProductID" />
+        <!-- Details Section -->
+        <section class="details-section">
+            <h3 class="section-heading">Details</h3>
+            <ul class="details-list">
+                <li>
+                    <p><b>Color:</b> @Model.Color</p>
+                </li>
+                <li>
+                    <p><b>Size:</b> @Model.Size</p>
+                </li>
+                <li>
+                    <p><b>Category:</b> @Model.Category.Name</p>
+                </li>
+            </ul>
+        </section>
 
-    <label>Quantity:</label>
-    <input type="number" name="Quantity" value="1" min="1" max="100" />
+        <!-- Reviews Section -->
+        
+        <section class="reviews-section">
+            <h3 class="section-heading">Reviews</h3>
+            @if (Model.ProductReviews.Any())
+                {
+                    foreach (var review in Model.ProductReviews)
+                    {
+            <div class="review-item">
+                <div class="review-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="review-content">
+                    <div class="review-header">
+                                <div class="review-stars">
+                                    @for (int i = 0; i < @review.Rating; i++)
+                                    {
+                                        <i class="fas fa-star"></i>
+                                    }
 
-    <button type="submit">Add To Cart</button>
-</form>
+                                </div>
+                        
+                                <span class="review-user">@review.User.FirstName @review.User.lastName</span>
+                    </div>
+                            <p class="review-text">@review.Comment</p>
+                </div>
+            </div>
+                    }
+                }
+                else
+                {
+                    <p>No reviews yet.</p>
+                }   
+        </section>
+    </div>
+</main>
 
-<!-- Reviews Section -->
-<h3>Reviews</h3>
+@* 
 
-@if (Model.ProductReviews.Any())
-{
-    foreach (var review in Model.ProductReviews)
-    {
-        <div style="border:1px solid #ccc; padding:10px; margin:10px 0;">
-            <b>@review.User.FirstName @review.User.lastName</b> - Rating: @review.Rating
-            <p>@review.Comment</p>
-        </div>
-    }
-}
-else
-{
-    <p>No reviews yet.</p>
-}
-
-<a asp-action="Index">Back to Products</a>
+<a asp-action ="Index" >
+    Back to Products </a> *@
 
 @* <h1>Details</h1>
 

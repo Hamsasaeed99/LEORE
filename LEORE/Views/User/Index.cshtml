@@ -4,7 +4,86 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="main-container1">
+    <!-- Left Navigation -->
+    <nav class="sidebar">
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="#" class="nav-link">My Information</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Order History</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Wishlist</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">My Rewards</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Support</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Log out</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content2">
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <div class="welcome-content">
+                <div class="profile-container">
+                    <div class="bow-decoration"></div>
+                    <div class="profile-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+                <div class="welcome-text">
+                    <h1 class="welcome-title">Hello, Menna!</h1>
+                    <h2 class="welcome-subtitle">Welcome To Your LEORÉ Space.</h2>
+                    <p class="welcome-description">Explore Your Orders, Manage Your Details, And Discover Exclusive Rewards.</p>
+                </div>
+            </div>
+            <button class="btn-edit-profile">Edit Profile</button>
+        </section>
+
+        <!-- Dashboard Cards -->
+        <section class="dashboard-cards">
+            <!-- My Orders Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">My Orders</h3>
+                    <i class="fas fa-shopping-cart card-icon"></i>
+                </div>
+                <div class="card-content">
+                    <p class="card-detail">Date: Oct 26,2025</p>
+                    <p class="card-detail">Status: Shipped</p>
+                    <p class="card-detail">Total:120$</p>
+                </div>
+                <button class="btn-card">View Orders</button>
+            </div>
+
+            <!-- Your Rewards Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Your Rewards</h3>
+                    <i class="fas fa-award card-icon"></i>
+                </div>
+                <div class="card-content">
+                    <p class="card-detail">You have 500 points!</p>
+                    <p class="card-detail">Get $10 off on your next purchase</p>
+                </div>
+                <button class="btn-card">Redeem Rewards</button>
+            </div>
+
+            <!-- Favorites Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Favorites</h3>
+                    <i class="fas fa-heart card-icon"></i>
+                </div>
+                <div class="card-content">
+                    <p class="card-detail">Date: Oct 26,2025</p>
+                    <p class="card-detail">Status: Shipped</p>
+                    <p class="card-detail">Total:120$</p>
+                </div>
+                <button class="btn-card">Go To Wishlist</button>
+            </div>
+        </section>
+    </main>
+</div>
+
+@* <h1>Index</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -72,6 +151,7 @@
                 <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a>
             </td>
         </tr>
-}
+} 
     </tbody>
 </table>
+*@

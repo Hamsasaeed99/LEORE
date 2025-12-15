@@ -12,9 +12,9 @@ namespace LEORE.Controllers
 {
     public class ProductReviewController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly LEOREContext _context;
 
-        public ProductReviewController(ApplicationDbContext context)
+        public ProductReviewController(LEOREContext context)
         {
             _context = context;
         }
@@ -22,7 +22,7 @@ namespace LEORE.Controllers
         // GET: ProductReview
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.ProductReview.Include(p => p.Product).Include(p => p.User);
+            var applicationDbContext = _context.ProductReviews.Include(p => p.Product).Include(p => p.User);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace LEORE.Controllers
                 return NotFound();
             }
 
-            var productReview = await _context.ProductReview
+            var productReview = await _context.ProductReviews
                 .Include(p => p.Product)
                 .Include(p => p.User)
                 .FirstOrDefaultAsync(m => m.ReviewID == id);
@@ -80,7 +80,7 @@ namespace LEORE.Controllers
                 return NotFound();
             }
 
-            var productReview = await _context.ProductReview.FindAsync(id);
+            var productReview = await _context.ProductReviews.FindAsync(id);
             if (productReview == null)
             {
                 return NotFound();
@@ -135,7 +135,7 @@ namespace LEORE.Controllers
                 return NotFound();
             }
 
-            var productReview = await _context.ProductReview
+            var productReview = await _context.ProductReviews
                 .Include(p => p.Product)
                 .Include(p => p.User)
                 .FirstOrDefaultAsync(m => m.ReviewID == id);
@@ -152,10 +152,10 @@ namespace LEORE.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var productReview = await _context.ProductReview.FindAsync(id);
+            var productReview = await _context.ProductReviews.FindAsync(id);
             if (productReview != null)
             {
-                _context.ProductReview.Remove(productReview);
+                _context.ProductReviews.Remove(productReview);
             }
 
             await _context.SaveChangesAsync();
@@ -164,7 +164,7 @@ namespace LEORE.Controllers
 
         private bool ProductReviewExists(int id)
         {
-            return _context.ProductReview.Any(e => e.ReviewID == id);
+            return _context.ProductReviews.Any(e => e.ReviewID == id);
         }
     }
 }

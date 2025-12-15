@@ -12,9 +12,9 @@ namespace LEORE.Controllers
 {
     public class WishListItemController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly LEOREContext _context;
 
-        public WishListItemController(ApplicationDbContext context)
+        public WishListItemController(LEOREContext context)
         {
             _context = context;
         }
@@ -22,7 +22,7 @@ namespace LEORE.Controllers
         // GET: WishListItem
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.WishListItem.Include(w => w.Product).Include(w => w.Wishlist);
+            var applicationDbContext = _context.WishListItems.Include(w => w.Product).Include(w => w.Wishlist);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace LEORE.Controllers
                 return NotFound();
             }
 
-            var wishListItem = await _context.WishListItem
+            var wishListItem = await _context.WishListItems
                 .Include(w => w.Product)
                 .Include(w => w.Wishlist)
                 .FirstOrDefaultAsync(m => m.WishlistItemsId == id);
@@ -50,7 +50,7 @@ namespace LEORE.Controllers
         public IActionResult Create()
         {
             ViewData["ProductID"] = new SelectList(_context.Set<Product>(), "ProductID", "Name");
-            ViewData["WishlistID"] = new SelectList(_context.WishList, "WishlistID", "WishlistID");
+            ViewData["WishlistID"] = new SelectList(_context.WishLists, "WishlistID", "WishlistID");
             return View();
         }
 
@@ -68,7 +68,7 @@ namespace LEORE.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ProductID"] = new SelectList(_context.Set<Product>(), "ProductID", "Name", wishListItem.ProductID);
-            ViewData["WishlistID"] = new SelectList(_context.WishList, "WishlistID", "WishlistID", wishListItem.WishlistID);
+            ViewData["WishlistID"] = new SelectList(_context.WishLists, "WishlistID", "WishlistID", wishListItem.WishlistID);
             return View(wishListItem);
         }
 
@@ -80,13 +80,13 @@ namespace LEORE.Controllers
                 return NotFound();
             }
 
-            var wishListItem = await _context.WishListItem.FindAsync(id);
+            var wishListItem = await _context.WishListItems.FindAsync(id);
             if (wishListItem == null)
             {
                 return NotFound();
             }
             ViewData["ProductID"] = new SelectList(_context.Set<Product>(), "ProductID", "Name", wishListItem.ProductID);
-            ViewData["WishlistID"] = new SelectList(_context.WishList, "WishlistID", "WishlistID", wishListItem.WishlistID);
+            ViewData["WishlistID"] = new SelectList(_context.WishLists, "WishlistID", "WishlistID", wishListItem.WishlistID);
             return View(wishListItem);
         }
 
@@ -123,7 +123,7 @@ namespace LEORE.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ProductID"] = new SelectList(_context.Set<Product>(), "ProductID", "Name", wishListItem.ProductID);
-            ViewData["WishlistID"] = new SelectList(_context.WishList, "WishlistID", "WishlistID", wishListItem.WishlistID);
+            ViewData["WishlistID"] = new SelectList(_context.WishLists, "WishlistID", "WishlistID", wishListItem.WishlistID);
             return View(wishListItem);
         }
 
@@ -135,7 +135,7 @@ namespace LEORE.Controllers
                 return NotFound();
             }
 
-            var wishListItem = await _context.WishListItem
+            var wishListItem = await _context.WishListItems
                 .Include(w => w.Product)
                 .Include(w => w.Wishlist)
                 .FirstOrDefaultAsync(m => m.WishlistItemsId == id);
@@ -152,10 +152,10 @@ namespace LEORE.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var wishListItem = await _context.WishListItem.FindAsync(id);
+            var wishListItem = await _context.WishListItems.FindAsync(id);
             if (wishListItem != null)
             {
-                _context.WishListItem.Remove(wishListItem);
+                _context.WishListItems.Remove(wishListItem);
             }
 
             await _context.SaveChangesAsync();
@@ -164,7 +164,7 @@ namespace LEORE.Controllers
 
         private bool WishListItemExists(int id)
         {
-            return _context.WishListItem.Any(e => e.WishlistItemsId == id);
+            return _context.WishListItems.Any(e => e.WishlistItemsId == id);
         }
     }
 }

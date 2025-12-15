@@ -1,0 +1,15 @@
+﻿@model IEnumerable<LEORE.Models.Category>
+
+<a asp-controller="Product" asp-action="Index" class="dropdown-item">All</a>
+<br />
+
+@foreach (var cat in Model)
+{
+    <a asp-controller="Product"
+       asp-action="Index"
+       asp-route-categoryId="@cat.CategoryId"
+       class="dropdown-item">
+        @cat.Name
+    </a>
+    <br />
+}
