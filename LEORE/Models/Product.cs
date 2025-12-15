@@ -39,6 +39,8 @@ public partial class Product
     [Column(TypeName = "datetime")]
     public DateTime CreatedAt { get; set; }
 
+    public int Rate { get; set; }
+
     [InverseProperty("Product")]
     public virtual ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
 

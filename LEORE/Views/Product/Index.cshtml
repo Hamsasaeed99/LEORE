@@ -4,37 +4,39 @@
     ViewData["Title"] = "Index";
 }
 
-
-<h2>Products</h2>
-
-<!-- Categories Filter -->
 <div>
-    <a asp-action="Index">All</a>
-    @foreach (var cat in ViewBag.Categories)
-    {
-        <a asp-action="Index" asp-route-categoryId="@cat.CategoryId">
-            @cat.Name
-        </a>
-    }
-</div>
-
-<hr />
-
-<div>
+    <main class="main-content">
 @foreach (var item in Model)
-{
-    <div style="border:1px solid #ccc; padding:10px; margin:10px;">
-            <img src="@item.Image" width="150" />
-        <h4>@item.Name</h4>
-        <p>@item.Price EGP</p>
-        <p>@item.Category.Name</p>
+        {
+            <div class="product-container">
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <i class="far fa-heart wishlist-icon"></i>
+                         <a asp-action="Details"
+                          asp-route-id="@item.ProductID"
+                          class="product-link">
+                        <img src="@item.Image" width="150" asp-action="Details" asp-route-id="@item.ProductID"/>
+                        </a>
+                    </div>
+                    <div class="product-details">
+                        <h3 class="product-name">@item.Name</h3>
+                        <div class="rating">
+                            @for (int i = 0; i < item.Rate; i++)
+                            {
+                                <i class="fas fa-star"></i>
+                            }
 
-        <a asp-action="Details" asp-route-id="@item.ProductID">
-            View Details
-        </a>
-    </div>
-}
+                        </div>
+                        <p class="price">@item.Price $</p>
+                        <button class="add-to-cart-btn">Add to cart</button>
+                    </div>
+                </div>
+            </div>
+            }
+        </main>
+
 </div>
+
 
 
 
