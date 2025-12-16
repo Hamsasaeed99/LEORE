@@ -1,0 +1,79 @@
+﻿@model IEnumerable<LEORE.Models.ViewModels.OrderHistoryViewModel>
+@using LEORE.Controllers;
+
+@{
+    ViewData["Title"] = "History";
+}
+<main class="main-content">
+    <div class="container">
+        <!-- Order History Section -->
+        <section class="order-history-section">
+            <h1 class="section-title">Order History</h1>
+            <p class="section-subtitle">Keep Track Of Your Past Purchases And Their Status.</p>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab-button" data-tab="current">Current</button>
+                <button class="tab-button active" data-tab="completed">Completed</button>
+            </div>
+
+            <!-- Order List -->
+            <div class="order-list-container">
+               
+                @if (!Model.Any())
+                {
+                    <!-- حالة عدم وجود طلبات -->
+                    <div class="empty-orders">
+                        <div class="empty-icon">
+                            <i class="fas fa-box-open fa-3x"></i>
+                        </div>
+                        <h3>No Orders Yet</h3>
+                        <p>You haven't placed any orders yet. Start shopping now!</p>
+                        <a asp-controller="Product" asp-action="Index" class="btn btn-primary">
+                            <i class="fas fa-shopping-bag"></i> Start Shopping
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <!-- عرض الطلبات الحقيقية -->
+                    @foreach (var order in Model)
+                    {
+                <div class="order-card">
+                    <div class="order-header">
+                        <div class="order-info">
+                                    <span class="order-id">#LEORE-@order.OrderId.ToString("D6")</span>
+                                    <span class="order-date">@order.OrderDate.ToString("MMMM dd, yyyy")</span>
+                        </div>
+                    </div>
+                    <div class="order-content">
+                        <div class="order-products">
+                            
+                                @foreach (var item in ) 
+                                  {
+                            <div class="product-image">
+                                                <img src="@item.Product.Image" alt="@item.Product.Name" class="product-img">
+                                            @if (item.Quantity > 1)
+                                            {
+                                                <span class="quantity-badge">x@(item.Quantity)</span>
+                                            }
+                            </div>
+                                  }
+                        </div>
+                        <div class="order-details">
+                            <div class="order-status-group">
+                                <span class="status-badge shipped">@order.OrderStatus</span>
+                                <span class="item-count">@order.OrderItems.Count</span>
+                            </div>
+                            <button class="action-button track">Track Order</button>
+                        </div>
+                    </div>
+                </div>
+
+                
+                            }
+                        }
+            </div>
+        </section>
+    </div>
+</main>

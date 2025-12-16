@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LEORE.Models;
+using LEORE.Models.ViewModels;
 
 namespace LEORE.Controllers
 {
@@ -23,6 +24,60 @@ namespace LEORE.Controllers
         {
             var lEOREContext = _context.Orders.Include(o => o.User);
             return View(await lEOREContext.ToListAsync());
+        }
+
+        public async Task<IActionResult> History()
+        {
+            var userId = HttpContext.Session.GetInt32("UserId");
+
+            if (userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            // جلب الطلبات مع تحويلها إلى ViewModel
+            var orders = await _context.Orders
+                .Include(o => o.OrderItems)
+                .Where(o => o.UserId == userId)
+                .OrderByDescending(o => o.CreatedAt)
+                .Select(o => new OrderHistoryViewModel
+                {
+                    OrderId = o.OrderID,
+                    OrderDate = o.CreatedAt,
+                    Status = o.OrderStatus,
+                    TotalAmount = o.OrderItems.Sum(oi => oi.Quantity * oi.Product.Price),
+                    ItemCount = o.OrderItems.Sum(oi => oi.Quantity),
+                    OrderNumber = $"ORD-{o.OrderID.ToString().PadLeft(6, '0')}"
+                })
+                .ToListAsync();
+
+            // إذا لم يكن لديه طلبات
+            if (!orders.Any())
+            {
+                ViewBag.NoOrdersMessage = "No Orders yet.";
+            }
+
+            return View(orders);
+        }
+        public async Task<IActionResult> OrderItems()
+        {
+            var orderItems = await _context.OrderItems
+                .Include(o => o.Order)
+                .OrderByDescending(or => or.Order.CreatedAt)
+                .Select(o => new OrderItem
+                {
+                    OrderItemID = o.OrderItemID,
+                    ProductID = o.ProductID,
+                    OrderId = o.OrderId,
+                    PriceAtPurchase = o.PriceAtPurchase,
+                    Quantity = o.Quantity,
+                    Order = o.Order,
+                    Product = o.Product
+                })
+                .ToListAsync();
+            // إذا لم يكن هناك طلبات
+            
+            return View(orderItems);
         }
 
         // GET: Order/Details/5

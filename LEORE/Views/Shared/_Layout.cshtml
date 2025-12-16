@@ -30,18 +30,40 @@
                 <a asp-controller="Home" asp-action="Index" class="nav-link">Home</a>
                 <div class="shop-dropdown">
                     <a asp-controller="Product" asp-action="Index" class="nav-link">Shop</a>
-                  
-                        <div class="dropdown-menu">
-                            
-                            @await Component.InvokeAsync("Categories")
-                        
-                        </div>
+
+                    <div class="dropdown-menu">
+
+                        @await Component.InvokeAsync("Categories")
+
+                    </div>
                 </div>
                 <a asp-controller="Home" asp-action="About" class="nav-link">About</a>
                 <a asp-controller="Home" asp-action="Contact" class="nav-link">Contact</a>
             </nav>
             <div class="header-icons">
-                <span class="profile-text">profile</span>
+                @{
+                    var userId = Context.Session.GetInt32("UserId");
+                }
+
+                @if (userId != null)
+                {
+                    <!-- مسجل دخول - عرض زرين -->
+                    <a asp-controller="User" asp-action="Index" class="profile-text">
+                        <i class="fas fa-user-circle"></i> Profile
+                    </a>
+                    <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                        <button type="submit" class="logout-btn-small">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </form>
+                }
+                else
+                {
+                    <!-- غير مسجل - عرض زر تسجيل الدخول -->
+                    <a asp-controller="Account" asp-action="Login" class="profile-text">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                }
                 <i class="fas fa-shopping-cart cart-icon"></i>
             </div>
         </div>
@@ -103,5 +125,6 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

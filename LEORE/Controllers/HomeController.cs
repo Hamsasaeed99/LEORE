@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using LEORE.Models;
+using LEORE.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LEORE.Controllers

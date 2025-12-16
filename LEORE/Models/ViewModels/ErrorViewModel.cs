@@ -1,4 +1,4 @@
-namespace LEORE.Models
+namespace LEORE.Models.ViewModels
 {
     public class ErrorViewModel
     {

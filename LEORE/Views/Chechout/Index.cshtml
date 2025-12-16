@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!-- Main Content -->
+<main class="main-content3">
+    <div class="checkout-card">
+        <!-- Order Summary -->
+        <section class="order-summary">
+            <h2 class="section-title">Order Summary</h2>
+            <div class="product-item">
+                <div class="product-image-placeholder"></div>
+                <div class="product-details">
+                    <div class="product-name">product name</div>
+                    <div class="product-price">price $</div>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="total-row">
+                <span class="total-label">Total</span>
+                <span class="total-price">total price $</span>
+            </div>
+        </section>
+
+        <!-- Shipping Information -->
+        <section class="shipping-info">
+            <h2 class="section-title">Shipping Information</h2>
+            <form class="shipping-form">
+                <input type="text" placeholder="Full Name" class="form-input" required>
+                <input type="email" placeholder="Email" class="form-input" required>
+                <input type="text" placeholder="City" class="form-input" required>
+                <input type="text" placeholder="Address" class="form-input" required>
+                <input type="text" placeholder="ZIP Code" class="form-input" required>
+            </form>
+        </section>
+
+        <!-- Payment Method -->
+        <section class="payment-method">
+            <h2 class="section-title">Payment Method</h2>
+            <div class="checkbox-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" class="checkbox-input" checked>
+                    <span class="checkbox-custom checked"></span>
+                    <span class="checkbox-text">Cash On Delivery</span>
+                </label>
+            </div>
+            <div class="checkbox-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" class="checkbox-input">
+                    <span class="checkbox-custom"></span>
+                    <span class="checkbox-text">Save My Information For A Later Checkout</span>
+                </label>
+            </div>
+        </section>
+
+        <!-- Complete Order Button -->
+        <button class="complete-order-btn">Complete Order</button>
+    </div>
+</main>

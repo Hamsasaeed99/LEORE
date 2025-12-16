@@ -11,6 +11,7 @@ namespace LEORE.Models;
 public partial class User
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int UserId { get; set; }
 
     [Required]

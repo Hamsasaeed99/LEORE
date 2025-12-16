@@ -121,7 +121,7 @@ public partial class LEOREContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.Property(e => e.UserId).ValueGeneratedNever();
+            entity.Property(e => e.UserId).ValueGeneratedOnAdd();
         });
 
         modelBuilder.Entity<WishList>(entity =>
