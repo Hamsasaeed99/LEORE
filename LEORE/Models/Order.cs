@@ -11,6 +11,7 @@ namespace LEORE.Models;
 public partial class Order
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int OrderID { get; set; }
 
     public int UserId { get; set; }

@@ -1,38 +1,10 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
 
-// Write your JavaScript code.
-// Wishlist functionality
-document.addEventListener('click', function (e) {
-
-    // Wishlist
-    if (e.target.classList.contains('wishlist-icon')) {
-        e.target.classList.toggle('active');
-        e.target.classList.toggle('far');
-        e.target.classList.toggle('fas');
-    }
-
-    // Add to cart
-    if (e.target.classList.contains('add-to-cart-btn')) {
-        const btn = e.target;
-        const originalText = btn.textContent;
-
-        btn.textContent = 'Added!';
-        btn.style.backgroundColor = '#4a8b4a';
-
-        setTimeout(() => {
-            btn.textContent = originalText;
-            btn.style.backgroundColor = '#8b4a4a';
-        }, 1500);
-    }
-
-});
 // Quantity Selector Functionality
 document.addEventListener('DOMContentLoaded', function() {
     const decreaseBtn = document.getElementById('decreaseQty');
     const increaseBtn = document.getElementById('increaseQty');
     const quantityDisplay = document.getElementById('quantity');
-    const addToCartBtn = document.querySelector('.add-to-cart-btn');
+    
 
     let quantity = 1;
 
@@ -86,6 +58,25 @@ document.addEventListener('DOMContentLoaded', function() {
     searchInput.addEventListener('blur', function() {
         this.style.backgroundColor = '#FFFFFF';
     });
+
+    // Add review button functionality (bottom bar)
+    const addReviewButton = document.querySelector('.add-review-submit');
+    if (addReviewButton) {
+        addReviewButton.addEventListener('click', function () {
+            if (this.classList.contains('added')) {
+                return;
+            }
+
+            this.classList.add('added');
+            this.textContent = 'Added!';
+
+            // Return to original state after 1.5 seconds
+            setTimeout(() => {
+                this.classList.remove('added');
+                this.textContent = 'Add review';
+            }, 1500);
+        });
+    }
 });
 
 // Simple notification function
@@ -134,4 +125,36 @@ function showNotification(message) {
     }, 3000);
 }
 
+
+document.querySelectorAll('.like-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+        sendReaction(this.dataset.id, true, this);
+    });
+});
+
+document.querySelectorAll('.dislike-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+        sendReaction(this.dataset.id, false, this);
+    });
+});
+
+function sendReaction(reviewId, isLike, btn) {
+    fetch('/Reviews/React', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            reviewId: reviewId,
+            isLike: isLike
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        btn.querySelector('span').innerText =
+            isLike ? data.likes : data.dislikes;
+
+        btn.classList.toggle('active');
+    });
+}
 

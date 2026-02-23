@@ -26,7 +26,7 @@ namespace LEORE.Controllers
         public async Task<IActionResult> Index(int? categoryId)
         {
             var products = _context.Products
-                .Include(p => p.Category)
+                .Include(p => p.Category).OrderBy(p=>p.Price)
                 .AsQueryable();
 
             if (categoryId != null)

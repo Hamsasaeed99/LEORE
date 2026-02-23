@@ -1,35 +1,81 @@
 ﻿@model IEnumerable<LEORE.Models.Cart>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "MyCart";
 }
+<main class="main-content">
+    <section class="cart-card">
+        <h1 class="page-title">Your Cart</h1>
 
-<h1>Index</h1>
+        <div class="products-section">
+            <h2 class="section-heading">Your Products</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Email)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.CartId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CartId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CartId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+            <article class="product-row" data-price="120">
+                <div class="product-thumb"></div>
+                <div class="product-info">
+                    <div class="product-name">product name</div>
+                    <div class="price-chip">
+                        <span class="price-value">$120.00</span>
+                    </div>
+                </div>
+                <div class="quantity">
+                    <button class="qty-btn">-</button>
+                    <span class="qty-value">1</span>
+                    <button class="qty-btn">+</button>
+                </div>
+                <button class="remove-btn"
+                        aria-label="Remove item">
+                    x
+                </button>
+            </article>
+
+            <article class="product-row" data-price="95">
+                <div class="product-thumb"></div>
+                <div class="product-info">
+                    <div class="product-name">product name</div>
+                    <div class="price-chip">
+                        <span class="price-value">$95.00</span>
+                    </div>
+                </div>
+                <div class="quantity">
+                    <button class="qty-btn">-</button>
+                    <span class="qty-value">1</span>
+                    <button class="qty-btn">+</button>
+                </div>
+                <button class="remove-btn"
+                        aria-label="Remove item">
+                    x
+                </button>
+            </article>
+        </div>
+
+        <div class="order-summary">
+            <h2 class="section-heading">Order Summary</h2>
+
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span class="subtotal-value">$0.00</span>
+            </div>
+
+            <div class="summary-row shipping-row">
+                <span>Shipping</span>
+                <span class="muted">Calculated At Checkout</span>
+            </div>
+
+            <div class="promo-row">
+                <input type="text" placeholder="Calculated At Checkout"
+                       class="promo-input">
+                <button class="apply-btn">Apply</button>
+            </div>
+
+            <div class="summary-row total-row">
+                <span>Total</span>
+                <span class="total-value">$0.00</span>
+            </div>
+
+            <button class="primary-btn">CheckOut</button>
+            <button class="secondary-btn">Continue Shopping</button>
+        </div>
+
+    </section>
+</main>

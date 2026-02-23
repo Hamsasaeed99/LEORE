@@ -11,6 +11,7 @@ namespace LEORE.Models;
 public partial class Cart
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int CartId { get; set; }
 
     public int? UserId { get; set; }

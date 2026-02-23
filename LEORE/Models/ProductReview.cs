@@ -11,6 +11,7 @@ namespace LEORE.Models;
 public partial class ProductReview
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int ReviewID { get; set; }
 
     public int ProductID { get; set; }
@@ -20,6 +21,8 @@ public partial class ProductReview
     [Required]
     public string Comment { get; set; }
 
+    public int LikesCount { get; set; } = 0;
+    public int DislikesCount { get; set; } = 0;
     public int Rating { get; set; }
 
     [Column(TypeName = "datetime")]

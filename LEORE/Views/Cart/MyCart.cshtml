@@ -1,0 +1,81 @@
+﻿@model LEORE.Models.Cart
+
+@{
+    ViewData["Title"] = "MyCart";
+}
+<main class="main-content">
+    <section class="cart-card">
+        <h1 class="page-title">Your Cart</h1>
+
+        @if (!Model.CartItems.Any())
+        {
+            <p>Your cart is empty.</p>
+        }else{
+
+        <div class="products-section">
+            <h2 class="section-heading">Your Products</h2>
+            @foreach (var item in Model.CartItems)
+            {
+                <article class="product-row" data-price="@item.Product.Price">
+                    <div  class="product-thumb">
+                        <img src="@item.Product.Image" alt="@item.Product.Name" width="50" />
+                    </div>
+                <div class="product-info">
+                    <div class="product-name">@item.Product.Name</div>
+                    <div class="price-chip">
+                        <span class="price-value">@item.Product.Price</span>
+                    </div>
+                </div>
+                <div class="quantity">
+                    <button class="qty-btn">-</button>
+                    <span class="qty-value">@item.Quantity</span>
+                    <button class="qty-btn">+</button>
+                </div>
+                <button class="remove-btn"
+                        aria-label="Remove item">
+                    x
+                </button>
+            </article>
+            }
+            
+        </div>
+        }
+        <div class="order-summary">
+            <h2 class="section-heading">Order Summary</h2>
+
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span class="subtotal-value">$0.00</span>
+            </div>
+
+            <div class="summary-row shipping-row">
+                <span>Shipping</span>
+                <span class="muted">Calculated At Checkout</span>
+            </div>
+
+            <div class="promo-row">
+                <input type="text" placeholder="EX:NH332"
+                       class="promo-input">
+                <button class="apply-btn">Apply</button>
+            </div>
+
+            <div class="summary-row total-row">
+                <span>Total</span>
+                <span class="total-value">$0.00</span>
+            </div>
+
+            <form asp-controller="Cart" asp-action="Checkout" method="get">
+                <button type="submit" class="primary-btn">
+                    Checkout
+                </button>
+            </form>
+            <form asp-controller="Product" asp-action="Index" method="get">
+                <button type="submit" class="secondary-btn">
+                    Continue Shopping
+                </button>
+            </form>
+            
+        </div>
+
+    </section>
+</main>

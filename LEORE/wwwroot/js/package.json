@@ -1,0 +1,15 @@
+{
+  "name": "leore-about-page",
+  "version": "1.0.0",
+  "description": "Static LEORÉ About page layout.",
+  "scripts": {
+    "start": "echo \"Open index.html in your browser\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}
+
+

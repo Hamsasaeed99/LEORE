@@ -26,6 +26,8 @@ namespace LEORE.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        
+
         // GET: WishList/Details/5
         public async Task<IActionResult> Details(int? id)
         {

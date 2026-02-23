@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LEORE.Models;
+using LEORE.Models.ViewModels;
 
 namespace LEORE.Controllers
 {
@@ -24,6 +25,56 @@ namespace LEORE.Controllers
             var lEOREContext = _context.Orders.Include(o => o.User);
             return View(await lEOREContext.ToListAsync());
         }
+
+        public async Task<IActionResult> History()
+        {
+            var userId = HttpContext.Session.GetInt32("UserId");
+
+            if (userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            // جلب الطلبات مع تحويلها إلى ViewModel
+            var orders = await _context.Orders
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Product)
+                .Where(o => o.UserId == userId)
+                .OrderByDescending(o => o.CreatedAt)
+                .Select(o => new OrderHistoryViewModel
+                {
+                    OrderId = o.OrderID,
+                    OrderDate = o.CreatedAt,
+                    Status = o.OrderStatus,
+                    TotalAmount = o.OrderItems.Sum(oi => oi.Quantity * oi.Product.Price),
+                    ItemCount = o.OrderItems.Sum(oi => oi.Quantity),
+                    OrderNumber = $"ORD-{o.OrderID.ToString().PadLeft(6, '0')}",
+                    OrderItems = o.OrderItems.ToList()
+                })
+                .ToListAsync();
+
+            // إذا لم يكن لديه طلبات
+            if (!orders.Any())
+            {
+                ViewBag.NoOrdersMessage = "No Orders yet.";
+            }
+
+            return View(orders);
+        }
+
+        public async Task<IActionResult> Invoice(int id)
+        {
+            var order = await _context.Orders
+                .Include(o => o.OrderItems)
+                    .ThenInclude(oi => oi.Product)
+                .FirstOrDefaultAsync(o => o.OrderID == id);
+
+            if (order == null)
+                return NotFound();
+
+            return View(order);
+        }
+
 
         // GET: Order/Details/5
         public async Task<IActionResult> Details(int? id)

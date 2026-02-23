@@ -11,6 +11,7 @@ namespace LEORE.Models;
 public partial class RefreshToken
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int RefreshTokensID { get; set; }
 
     [Required]

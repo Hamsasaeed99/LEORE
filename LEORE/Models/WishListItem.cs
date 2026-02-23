@@ -11,6 +11,7 @@ namespace LEORE.Models;
 public partial class WishListItem
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int WishlistItemsId { get; set; }
 
     public int WishlistID { get; set; }

@@ -23,7 +23,7 @@ namespace LEORE.Controllers
         {
             return View(await _context.Categories.ToListAsync());
         }
-
+       
         // GET: Category/Details/5
         public async Task<IActionResult> Details(int? id)
         {
