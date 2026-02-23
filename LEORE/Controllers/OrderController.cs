@@ -38,6 +38,7 @@ namespace LEORE.Controllers
             // جلب الطلبات مع تحويلها إلى ViewModel
             var orders = await _context.Orders
                 .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Product)
                 .Where(o => o.UserId == userId)
                 .OrderByDescending(o => o.CreatedAt)
                 .Select(o => new OrderHistoryViewModel
@@ -47,7 +48,8 @@ namespace LEORE.Controllers
                     Status = o.OrderStatus,
                     TotalAmount = o.OrderItems.Sum(oi => oi.Quantity * oi.Product.Price),
                     ItemCount = o.OrderItems.Sum(oi => oi.Quantity),
-                    OrderNumber = $"ORD-{o.OrderID.ToString().PadLeft(6, '0')}"
+                    OrderNumber = $"ORD-{o.OrderID.ToString().PadLeft(6, '0')}",
+                    OrderItems = o.OrderItems.ToList()
                 })
                 .ToListAsync();
 
@@ -59,26 +61,20 @@ namespace LEORE.Controllers
 
             return View(orders);
         }
-        public async Task<IActionResult> OrderItems()
+
+        public async Task<IActionResult> Invoice(int id)
         {
-            var orderItems = await _context.OrderItems
-                .Include(o => o.Order)
-                .OrderByDescending(or => or.Order.CreatedAt)
-                .Select(o => new OrderItem
-                {
-                    OrderItemID = o.OrderItemID,
-                    ProductID = o.ProductID,
-                    OrderId = o.OrderId,
-                    PriceAtPurchase = o.PriceAtPurchase,
-                    Quantity = o.Quantity,
-                    Order = o.Order,
-                    Product = o.Product
-                })
-                .ToListAsync();
-            // إذا لم يكن هناك طلبات
-            
-            return View(orderItems);
+            var order = await _context.Orders
+                .Include(o => o.OrderItems)
+                    .ThenInclude(oi => oi.Product)
+                .FirstOrDefaultAsync(o => o.OrderID == id);
+
+            if (order == null)
+                return NotFound();
+
+            return View(order);
         }
+
 
         // GET: Order/Details/5
         public async Task<IActionResult> Details(int? id)

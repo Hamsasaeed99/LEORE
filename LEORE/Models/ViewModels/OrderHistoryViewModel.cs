@@ -7,6 +7,8 @@
         public string Status { get; set; }
         public decimal TotalAmount { get; set; }
         public int ItemCount { get; set; }
-        public string OrderNumber { get; set; } // رقم الطلب
-    }
+        public string OrderNumber { get; set; }
+        // رقم الطلب
+        public List<OrderItem> OrderItems { get; set; }
+        }
 }

@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using LEORE.Data;
+using LEORE.Models;
+using LEORE.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using LEORE.Data;
-using LEORE.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LEORE.Controllers
 {
@@ -24,6 +25,29 @@ namespace LEORE.Controllers
         {
             var applicationDbContext = _context.ProductReviews.Include(p => p.Product).Include(p => p.User);
             return View(await applicationDbContext.ToListAsync());
+        }
+        // Post: ProductReview/React
+        [HttpPost]
+        public IActionResult React([FromBody] ReviewReactionVM model)
+        {
+            var review = _context.ProductReviews
+                .FirstOrDefault(r => r.ReviewID == model.ReviewId);
+
+            if (review == null)
+                return NotFound();
+
+            if (model.IsLike)
+                review.LikesCount++;
+            else
+                review.DislikesCount++;
+
+            _context.SaveChanges();
+
+            return Json(new
+            {
+                likes = review.LikesCount,
+                dislikes = review.DislikesCount
+            });
         }
 
         // GET: ProductReview/Details/5

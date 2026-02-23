@@ -11,6 +11,7 @@ namespace LEORE.Models;
 public partial class Product
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int ProductID { get; set; }
 
     public int CategoryID { get; set; }

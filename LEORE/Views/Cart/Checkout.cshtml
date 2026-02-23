@@ -1,0 +1,77 @@
+﻿@{
+    ViewData["Title"] = "Checkout";
+    @model LEORE.Models.Cart
+}
+<form asp-controller="Cart" asp-action="Checkout" method="post">
+
+<main class="main-content">
+    <div class="checkout-card">
+        <!-- Order Summary -->
+        <section class="order-summary">
+            <h2 class="section-title">Order Summary</h2>
+                @foreach (var item in Model.CartItems)
+                {
+                    <div class="product-item">
+                        <div class="product-image-placeholder">
+                            <img src="@item.Product.Image" alt="@item.Product?.Name" width="55"/>
+                        </div>
+                <div class="product-details">
+                            <div class="product-name">@item.Product?.Name</div>
+                            <div class="product-price">$@item.Product?.Price * @item.Quantity</div>
+                </div>
+            </div>
+                }
+            <div class="divider"></div>
+            <div class="total-row">
+                <span class="total-label">Total</span>
+                    <span class="total-price">$@Model.CartItems.Sum(i => (i.Product?.Price ?? 0) * i.Quantity) $</span>
+            </div>
+        </section>
+
+        <!-- Shipping Information -->
+        <section class="shipping-info">
+            <h2 class="section-title">Shipping Information</h2>
+            <form class="shipping-form">
+                    <input type="text" name="FullName" placeholder="Full Name"
+                       class="form-input" required>
+                    <input type="email" name="Email" placeholder="Email"
+                       class="form-input" required>
+                    <input type="text" name="City" placeholder="City" class="form-input"
+                       required>
+                    <input type="text" name="ShippingAddress" placeholder="Address"
+                       class="form-input" required>
+                    <input type="text" name="ZipCode" placeholder="ZIP Code"
+                       class="form-input" required>
+            </form>
+        </section>
+
+        <!-- Payment Method -->
+        <section class="payment-method">
+            <h2 class="section-title">Payment Method</h2>
+            <div class="checkbox-group">
+                <label class="checkbox-label">
+                        <input type="radio" class="checkbox-input"
+                           checked>
+                    <span class="checkbox-custom checked"></span>
+                    <span class="checkbox-text">Cash On Delivery</span>
+                </label>
+            </div>
+            <div class="checkbox-group">
+                <label class="checkbox-label">
+                        <input type="radio" class="checkbox-input">
+                    <span class="checkbox-custom"></span>
+                    <span class="checkbox-text">
+                        Save My Information For
+                        A Later Checkout
+                    </span>
+                </label>
+            </div>
+        </section>
+
+        <!-- Complete Order Button -->
+            <button type="submit" class="complete-order-btn">
+                Complete Order
+            </button>
+    </div>
+</main>
+</form>

@@ -1,9 +1,17 @@
 ﻿@model IEnumerable<LEORE.Models.ViewModels.OrderHistoryViewModel>
-@using LEORE.Controllers;
 
 @{
     ViewData["Title"] = "History";
+
+
+    // تحديد الـ Status الحالي
+    var currentStatus = ViewBag.CurrentStatus as string;
+
+    // تحديد أي تبويب نشط
+    var currentTabClass = string.IsNullOrEmpty(currentStatus) || currentStatus != "Delivered" ? "active" : "";
+    var deliveredTabClass = currentStatus == "Delivered" ? "active" : "";
 }
+
 <main class="main-content">
     <div class="container">
         <!-- Order History Section -->
@@ -13,8 +21,12 @@
 
             <!-- Tabs -->
             <div class="tabs">
-                <button class="tab-button" data-tab="current">Current</button>
-                <button class="tab-button active" data-tab="completed">Completed</button>
+                <button asp-action="History" asp-route-status="" class="tab-button" data-tab="current">
+                    Current
+                </button>
+                <button asp-action="History" asp-route-status="Delivered" class="tab-button active" data-tab="Delivered">
+                    Completed
+                </button>
             </div>
 
             <!-- Order List -->
@@ -46,23 +58,27 @@
                                     <span class="order-date">@order.OrderDate.ToString("MMMM dd, yyyy")</span>
                         </div>
                     </div>
+                            
                     <div class="order-content">
                         <div class="order-products">
-                            
-                                @foreach (var item in ) 
-                                  {
-                            <div class="product-image">
+                                    
+                                        @foreach (var item in order.OrderItems)
+                                        {
+                                            <div class="product-image">
                                                 <img src="@item.Product.Image" alt="@item.Product.Name" class="product-img">
-                                            @if (item.Quantity > 1)
-                                            {
-                                                <span class="quantity-badge">x@(item.Quantity)</span>
-                                            }
-                            </div>
-                                  }
-                        </div>
+                                                
+                                            </div>
+                                        @if (item.Quantity > 1)
+                                        {
+                                            <span class="item-count">x@(item.Quantity)</span>
+                                        }
+
+                                        }
+
+                                </div>
                         <div class="order-details">
                             <div class="order-status-group">
-                                <span class="status-badge shipped">@order.OrderStatus</span>
+                                <span class="status-badge shipped">@order.Status</span>
                                 <span class="item-count">@order.OrderItems.Count</span>
                             </div>
                             <button class="action-button track">Track Order</button>

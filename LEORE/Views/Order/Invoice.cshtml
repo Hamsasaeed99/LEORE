@@ -1,0 +1,64 @@
+﻿
+    @model LEORE.Models.Order
+
+<!-- Main Content -->
+<main class="main-content">
+    <div class="order-card">
+        <!-- Order Complete Section -->
+        <div class="order-summary-section">
+            <h1 class="order-complete-title">ORDER COMPLETE</h1>
+            <p class="thank-you-message">
+                Thank you. Your order has been
+                received.
+            </p>
+
+            <ul class="order-details">
+                <li><strong>Order number:</strong>@Model.OrderID </li>
+                <li><strong>Date:</strong> @Model.CreatedAt.ToString("MMMM dd, yyyy")</li>
+                <li>
+                    <strong>Total:</strong> <strong>
+                        @Model.TotalAmount $
+                    </strong>
+                </li>
+                <li>
+                    <strong>Payment method:</strong> <strong>
+                        @Model.PaymentMethod
+                    </strong>
+                </li>
+            </ul>
+
+        
+
+        
+
+        <!-- Order Summary Section -->
+        
+            <h2 class="order-summary-title"><u>Order Summary</u></h2>
+            @foreach (var item in Model.OrderItems)
+            {
+                <div class="product-item">
+                    <div class="product-image-placeholder">
+                        <img src="@item.Product.Image" alt="@item.Product.Name" />
+                    </div>
+
+                    <div class="product-info">
+                        <div class="product-name">@item.Product.Name
+                            <span class="product-quantity"> x @item.Quantity</span>
+                        </div>
+                        <div class="product-price">
+                            @(item.PriceAtPurchase* item.Quantity) $
+                        </div>
+                    </div>
+                </div>
+            }
+
+            
+            <div class="order-total">
+                <span class="total-label">Total</span>
+                <span class="total-price">
+                    <strong>@Model.TotalAmount $</strong>
+                </span>
+            </div>
+        </div>
+    </div>
+</main>

@@ -44,14 +44,14 @@ public partial class LEOREContext : DbContext
     {
         modelBuilder.Entity<Cart>(entity =>
         {
-            entity.Property(e => e.CartId).ValueGeneratedNever();
+            entity.Property(e => e.CartId).ValueGeneratedOnAdd();
 
             entity.HasOne(d => d.User).WithMany(p => p.Carts).HasConstraintName("FK_Carts_Users");
         });
 
         modelBuilder.Entity<CartItem>(entity =>
         {
-            entity.Property(e => e.CartItemsId).ValueGeneratedNever();
+            entity.Property(e => e.CartItemsId).ValueGeneratedOnAdd();
 
             entity.HasOne(d => d.Cart).WithMany(p => p.CartItems).HasConstraintName("FK_CartItems_Carts");
 
@@ -62,13 +62,13 @@ public partial class LEOREContext : DbContext
 
         modelBuilder.Entity<Category>(entity =>
         {
-            entity.Property(e => e.CategoryId).ValueGeneratedNever();
+            entity.Property(e => e.CategoryId).ValueGeneratedOnAdd();
             entity.Property(e => e.Name).IsFixedLength();
         });
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.Property(e => e.OrderID).ValueGeneratedNever();
+            entity.Property(e => e.OrderID).ValueGeneratedOnAdd();
 
             entity.HasOne(d => d.User).WithMany(p => p.Orders)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -77,7 +77,7 @@ public partial class LEOREContext : DbContext
 
         modelBuilder.Entity<OrderItem>(entity =>
         {
-            entity.Property(e => e.OrderItemID).ValueGeneratedNever();
+            entity.Property(e => e.OrderItemID).ValueGeneratedOnAdd();
 
             entity.HasOne(d => d.Order).WithMany(p => p.OrderItems)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -90,7 +90,7 @@ public partial class LEOREContext : DbContext
 
         modelBuilder.Entity<Product>(entity =>
         {
-            entity.Property(e => e.ProductID).ValueGeneratedNever();
+            entity.Property(e => e.ProductID).ValueGeneratedOnAdd();
 
             entity.HasOne(d => d.Category).WithMany(p => p.Products)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -99,7 +99,7 @@ public partial class LEOREContext : DbContext
 
         modelBuilder.Entity<ProductReview>(entity =>
         {
-            entity.Property(e => e.ReviewID).ValueGeneratedNever();
+            entity.Property(e => e.ReviewID).ValueGeneratedOnAdd();
 
             entity.HasOne(d => d.Product).WithMany(p => p.ProductReviews)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -112,7 +112,7 @@ public partial class LEOREContext : DbContext
 
         modelBuilder.Entity<RefreshToken>(entity =>
         {
-            entity.Property(e => e.RefreshTokensID).ValueGeneratedNever();
+            entity.Property(e => e.RefreshTokensID).ValueGeneratedOnAdd();
 
             entity.HasOne(d => d.User).WithMany(p => p.RefreshTokens)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -126,7 +126,7 @@ public partial class LEOREContext : DbContext
 
         modelBuilder.Entity<WishList>(entity =>
         {
-            entity.Property(e => e.WishlistID).ValueGeneratedNever();
+            entity.Property(e => e.WishlistID).ValueGeneratedOnAdd();
 
             entity.HasOne(d => d.User).WithMany(p => p.WishLists)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -135,7 +135,7 @@ public partial class LEOREContext : DbContext
 
         modelBuilder.Entity<WishListItem>(entity =>
         {
-            entity.Property(e => e.WishlistItemsId).ValueGeneratedNever();
+            entity.Property(e => e.WishlistItemsId).ValueGeneratedOnAdd();
 
             entity.HasOne(d => d.Product).WithMany(p => p.WishListItems)
                 .OnDelete(DeleteBehavior.ClientSetNull)

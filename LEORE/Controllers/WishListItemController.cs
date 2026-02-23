@@ -22,7 +22,8 @@ namespace LEORE.Controllers
         // GET: WishListItem
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.WishListItems.Include(w => w.Product).Include(w => w.Wishlist);
+
+            var applicationDbContext = _context.WishListItems.Include(w => w.Product).Include(w => w.Wishlist.UserID);
             return View(await applicationDbContext.ToListAsync());
         }
 

@@ -1,8 +1,98 @@
-﻿@{
+﻿@model IEnumerable<LEORE.Models.Category>
+@{
     ViewData["Title"] = "Home Page";
 }
+<!-- Hero Rectangle (design banner) -->
+<section class="hero-rect">
+    <div class="hero-rect-inner container">
+        <div class="hero-rect-content">
+            <h1 class="hero-title">
+                Beauty, Style & Elegance <br /><span class="hero-sub">in one place</span>
+            </h1>
+            <a asp-controller="Product" asp-action="Index" class="shop-now-btn rect">Shop Now</a>
+        </div>
+        <div class="hero-rect-image">
+            <img src="/images/Home/girl without background.png" alt="Girl" />
+        </div>
+    </div>
+</section>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="categories">
+    <div class="container">
+      
+                    <h2 class="section-title">Categories</h2>
+                    <div class="categories-grid">
+                        @if (Model != null && Model.Any())
+                        {
+                            @foreach (var category in Model)
+                            {
+                                <a asp-controller="Product"
+                                   asp-action="Index"
+                                   asp-route-categoryId="@category.CategoryId"
+                                   class="category-link">
+
+                                <div class="category-card">
+                                    <img src="@category.Image" class="category-image perfumes" />
+                                    <h3 class="category-name">@category.Name</h3>
+                                </div>
+                                </a>
+                            }
+                        }
+                        else
+                        {
+                            <p>No categories available.</p>
+                        }
+                          
+                            </div>
+                        
+                    
+    </div>
+</section>
+<!-- Promotional Banners -->
+<section class="promotional-banners">
+    <div class="promo-banner promo-1">
+        <div class="promo-products">
+            <div class="promo-product-item">
+                <img src="/images/Home/bag.png" alt="Bag" />
+            </div>
+            <div class="promo-product-item">
+                <img src="/images/Home/earing.png" alt="Earring" />
+            </div>
+            <div class="promo-product-item">
+                <img src="/images/Home/perfume.png" alt="Perfume" />
+            </div>
+            <div class="promo-product-item">
+                <img src="/images/Home/glasses.png" alt="Glasses" />
+            </div>
+            <div class="promo-product-item">
+                <img src="/images/Home/scarf.png" alt="Scarf" />
+            </div>
+            <div class="promo-product-item">
+                <img src="/images/Home/watch.png" alt="Watch" />
+            </div>
+        </div>
+        <div class="promo-content">
+            <h2 class="promo-text">Buy 2 get 1 free</h2>
+        </div>
+    </div>
+    <div class="promo-banner promo-2">
+        <div class="promo-products">
+            <div class="promo-product-item">
+                <img src="/images/Home/blusher brush.png" alt="Blusher brush" />
+            </div>
+            <div class="promo-product-item">
+                <img src="/images/Home/blusher.png" alt="Blusher" />
+            </div>
+            <div class="promo-product-item">
+                <img src="/images/Home/maskara.png" alt="Maskara" />
+            </div>
+            <div class="promo-product-item">
+                <img src="/images/Home/kiko.png" alt="Kiko" />
+            </div>
+        </div>
+        <div class="promo-content">
+            <h2 class="promo-text">Up to 30% on Makeup</h2>
+        </div>
+    </div>
+</section>
+<script src="~/js2/Home.js" asp-append-version="true"></script>
